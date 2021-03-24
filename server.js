@@ -1,9 +1,26 @@
 const express = require('express');
+const connectDB = require('./connection/connect');
+const cors = require('cors');
+const users = require('./controllers/users.controller');
 
 const  app = express();
 
+// Connect To DB;
+connectDB();
+
+// Init Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
+
+
+// routes
+app.use('/api/v1/users', users);
+
+
+
 app.get('/', (req, res) => {
-  res.send('Hello world API running')
+  res.send('API running')
 });
 
 const PORT = process.env.PORT || 5000;
