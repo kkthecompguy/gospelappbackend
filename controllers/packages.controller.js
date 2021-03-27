@@ -38,7 +38,7 @@ router.post('/create',
     return res.status(201).json({ message: 'Package Created Successfully', status: 201 });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message, status: 500 });
   }
 });
 
@@ -77,7 +77,7 @@ router.post('/update',
     return res.status(201).json({ message: 'Package Updated Successfully', status: 201 });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message, status: 500 });
   }
 });
 
@@ -91,7 +91,7 @@ router.get('/list', async (req, res) => {
     return res.status(200).json(packages)
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message, status: 500 });
   }
 });
 
@@ -107,7 +107,7 @@ router.get('/:packageId', async (req, res) => {
     return res.status(200).json(package)
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message, status: 500 });
   }
 });
 
@@ -120,10 +120,10 @@ router.delete('/:packageId', isAuthenticated, async (req, res) => {
     const package = await Package.findByIdAndDelete(packageId);
     if (!package) return res.status(404).json({ message: 'Package Not Found', status: 404 });
 
-    return res.status(200).json({ message: 'Package Deleted' })
+    return res.status(200).json({ message: 'Package Deleted' });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message, status: 500 });
   }
 });
 module.exports = router;
