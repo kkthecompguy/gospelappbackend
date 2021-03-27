@@ -3,6 +3,8 @@ const connectDB = require('./connection/connect');
 const cors = require('cors');
 const users = require('./controllers/users.controller');
 const packages = require('./controllers/packages.controller');
+const videos = require('./controllers/videos.controller');
+const audios = require('./controllers/audios.controller');
 
 const  app = express();
 
@@ -18,6 +20,8 @@ app.use(cors());
 // routes
 app.use('/api/v1/users', users);
 app.use('/api/v1/packages', packages)
+app.use('/api/v1/videos', videos);
+app.use('/api/v1/audios', audios);
 
 
 
