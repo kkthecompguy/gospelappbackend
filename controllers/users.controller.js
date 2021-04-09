@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const crypto = require('crypto');
 const sendMail = require('../utils/sendMail');
 const jwt = require('jsonwebtoken');
+const { isAuthenticated } = require('../middleware/auth');
 
 dotenv.config()
 
@@ -41,7 +42,7 @@ router.post('/login',
         if (error) {
           throw error;
         } else {
-          return res.status(200).json({...payload, token: token});
+          return res.status(200).json({...payload, token: token, subscribed: user.subscribed});
         }
       });
     } else { 
@@ -49,13 +50,13 @@ router.post('/login',
       const user = await User.findOne({ phoneNumber: phoneNumber });
       if (!user) return res.status(400).json({ message: "Invalid credentials", status: 400 });
       const isMatch = await bcrypt.compare(req.body.password, user.password);
-      if (!isMatch) return res.status(400).json({ message: "Invalid credentials", status: 400 });
+      if (!isMatch) return res.status(400).json({ message: "Invalid credentials", status: 400 }); 
       const payload = {
         id: user._id,
         status: user.status,
         role: user.role,
         isAdmin: user.isAdmin,
-        email: user.email
+        email: user.email,
       }
       jwt.sign(payload, process.env.JWT_SECRECT_KEY, {
         expiresIn: '1h'
@@ -63,7 +64,7 @@ router.post('/login',
         if (error) {
           throw error;
         } else {
-          return res.status(200).json({...payload, token: token});
+          return res.status(200).json({...payload, token: token,subscribed: user.subscribed});
         }
       });
     } 
@@ -200,6 +201,22 @@ router.get('/all', async(req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({ error: error.message, status: 500});
+  }
+});
+
+
+// @route /api/v1/users/profile
+// @desc get user profile
+// @access Private
+router.get('/profile', isAuthenticated, async (req, res) => {
+  try {
+    console.log(req.user);
+    const user = await User.findById(req.user.id).select('-password');
+    if (!user) return res.status(404).json({ msg: 'User Not Found', status: 404 });
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ error: error.message, status: 500});
   }
 })
 

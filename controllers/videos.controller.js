@@ -2,7 +2,7 @@ const express = require('express');
 const { body } = require('express-validator');
 const { nanoid } = require('nanoid');
 const router = express.Router();
-const isAuthenticated = require('../middleware/auth');
+const { isAuthenticated } = require('../middleware/auth');
 const { Video, Genre} = require('../models/Videos');
 const { uploadVideo, uploadThumbnail } = require('../utils/fileUpload')
 
@@ -85,7 +85,7 @@ router.get('/popular', isAuthenticated, async (req, res) => {
 // @route /api/v1/videos/catholic
 // @desc Catholic Videos
 // @access Private
-router.get('/popular', isAuthenticated, async (req, res) => {
+router.get('/catholic', isAuthenticated, async (req, res) => {
   try {
     const videos = await Video.find({ genre: Genre.Catholic }).sort('-createdAt');
     return res.status(201).json(videos);
@@ -144,3 +144,5 @@ router.get('/:videoId', isAuthenticated, async (req, res) =>  {
     res.status(500).json({ error: error.message, status: 500 });
   }
 });
+
+module.exports = router;

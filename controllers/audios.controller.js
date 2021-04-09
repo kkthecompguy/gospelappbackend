@@ -2,7 +2,7 @@ const express = require('express');
 const { body } = require('express-validator');
 const { nanoid } = require('nanoid');
 const router = express.Router();
-const isAuthenticated = require('../middleware/auth');
+const { isAuthenticated } = require('../middleware/auth');
 const { Audio, Genre} = require('../models/Audio');
 const { uploadAudio, uploadThumbnail } = require('../utils/fileUpload')
 
@@ -144,3 +144,5 @@ router.get('/:audioId', isAuthenticated, async (req, res) =>  {
     res.status(500).json({ error: error.message, status: 500 });
   }
 });
+
+module.exports = router;

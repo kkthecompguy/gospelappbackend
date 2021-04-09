@@ -5,6 +5,7 @@ const users = require('./controllers/users.controller');
 const packages = require('./controllers/packages.controller');
 const videos = require('./controllers/videos.controller');
 const audios = require('./controllers/audios.controller');
+const payment = require('./controllers/payment.controller');
 
 const  app = express();
 
@@ -22,6 +23,7 @@ app.use('/api/v1/users', users);
 app.use('/api/v1/packages', packages)
 app.use('/api/v1/videos', videos);
 app.use('/api/v1/audios', audios);
+app.use('/api/v1/payment', payment);
 
 
 
