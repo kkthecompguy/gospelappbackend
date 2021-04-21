@@ -1,0 +1,83 @@
+POST http://localhost:5000/api/v1/users/login
+Content-Type: application/json
+
+{
+  "password": "tina@123",
+  "emailphone": "tinaoguk@gmail.com"
+}
+
+###
+POST http://localhost:5000/api/v1/users/register
+Content-Type: application/json
+
+{
+  "firstName": "Tina",
+  "lastName": "Oguk",
+  "email": "tinaoguk@gmail.com",
+  "phoneNumber": "0701573947",
+  "password": "tina@123"
+}
+
+###
+GET http://localhost:5000/api/v1/audios/list
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNzZkOWNjN2FiNGZlNDlhYzJiYWU1OCIsInN0YXR1cyI6dHJ1ZSwiaXNBZG1pbiI6ZmFsc2UsImVtYWlsIjoidGluYW9ndWtAZ21haWwuY29tIiwiaWF0IjoxNjE4ODE4NjUxLCJleHAiOjE2MTg4MjIyNTF9.QK1qLur7Svr-M79T-8-D4O0wPo9mh8DS521nMgHHwaY
+
+
+###
+GET http://localhost:5000/api/v1/videos/list
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNzZkOWNjN2FiNGZlNDlhYzJiYWU1OCIsInN0YXR1cyI6dHJ1ZSwiaXNBZG1pbiI6ZmFsc2UsImVtYWlsIjoidGluYW9ndWtAZ21haWwuY29tIiwiaWF0IjoxNjE4ODE4NjUxLCJleHAiOjE2MTg4MjIyNTF9.QK1qLur7Svr-M79T-8-D4O0wPo9mh8DS521nMgHHwaY
+
+###
+GET http://localhost:5000/api/v1/videos/evagelical
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNzZkOWNjN2FiNGZlNDlhYzJiYWU1OCIsInN0YXR1cyI6dHJ1ZSwiaXNBZG1pbiI6ZmFsc2UsImVtYWlsIjoidGluYW9ndWtAZ21haWwuY29tIiwiaWF0IjoxNjE4ODE4NjUxLCJleHAiOjE2MTg4MjIyNTF9.QK1qLur7Svr-M79T-8-D4O0wPo9mh8DS521nMgHHwaY
+
+
+###
+GET http://localhost:5000/api/v1/videos/sda
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNzZkOWNjN2FiNGZlNDlhYzJiYWU1OCIsInN0YXR1cyI6dHJ1ZSwiaXNBZG1pbiI6ZmFsc2UsImVtYWlsIjoidGluYW9ndWtAZ21haWwuY29tIiwiaWF0IjoxNjE4ODE4NjUxLCJleHAiOjE2MTg4MjIyNTF9.QK1qLur7Svr-M79T-8-D4O0wPo9mh8DS521nMgHHwaY
+
+###
+GET http://localhost:5000/api/v1/videos/607c2c045e0e58597c899c3d
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNzZkOWNjN2FiNGZlNDlhYzJiYWU1OCIsInN0YXR1cyI6dHJ1ZSwiaXNBZG1pbiI6ZmFsc2UsImVtYWlsIjoidGluYW9ndWtAZ21haWwuY29tIiwiaWF0IjoxNjE4ODIyMjk4LCJleHAiOjE2MTg4MjU4OTh9.Jh-zGrzYA9dL25q6WdWIgAGr_gBr1T8STXUGpcyyno0
+
+
+###
+GET http://localhost:5000/api/v1/videos/catholic
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNzZkOWNjN2FiNGZlNDlhYzJiYWU1OCIsInN0YXR1cyI6dHJ1ZSwiaXNBZG1pbiI6ZmFsc2UsImVtYWlsIjoidGluYW9ndWtAZ21haWwuY29tIiwiaWF0IjoxNjE4ODE4NjUxLCJleHAiOjE2MTg4MjIyNTF9.QK1qLur7Svr-M79T-8-D4O0wPo9mh8DS521nMgHHwaY
+
+###
+POST  http://localhost:5000/api/v1/videos/download
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNzZkOWNjN2FiNGZlNDlhYzJiYWU1OCIsInN0YXR1cyI6dHJ1ZSwiaXNBZG1pbiI6ZmFsc2UsImVtYWlsIjoidGluYW9ndWtAZ21haWwuY29tIiwiaWF0IjoxNjE4ODYwOTI3LCJleHAiOjE2MTg4NjQ1Mjd9.xdHJB2z2-WYR9wPWejTq6iBqmDCTAlrylRMKXOU4lxQ
+
+{
+  "mediaType": "Video",
+  "mediaId": "ke1TgzGZl3",
+  "mediaUrl": "https://res.cloudinary.com/kosamtech/video/upload/v1618749380/rayvanny_ft_zuchu_number_one_official_video_h264_45155_viyk72.mp4",
+  "thumbnail": "https://res.cloudinary.com/kosamtech/image/upload/v1618750558/smqhhqzzwrximixoyvwo.jpg",
+  "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters"
+}
+
+
+###
+POST  http://localhost:5000/api/v1/audios/download
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNzZkOWNjN2FiNGZlNDlhYzJiYWU1OCIsInN0YXR1cyI6dHJ1ZSwiaXNBZG1pbiI6ZmFsc2UsImVtYWlsIjoidGluYW9ndWtAZ21haWwuY29tIiwiaWF0IjoxNjE4ODYwOTI3LCJleHAiOjE2MTg4NjQ1Mjd9.xdHJB2z2-WYR9wPWejTq6iBqmDCTAlrylRMKXOU4lxQ
+
+{
+  "mediaType": "Audio",
+  "mediaId": "s4X5xwB__2",
+  "mediaUrl": "https://res.cloudinary.com/kosamtech/video/upload/v1618746580/zuchu_sukari_official_music_video_aac_79280_zws3gd.m4a",
+  "thumbnail": "https://res.cloudinary.com/kosamtech/image/upload/v1618748864/spjmbjwy3qywhv9gz3tt.jpg",
+  "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters"
+}
+
+###
+GET http://localhost:5000/api/v1/users/me/downloads
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNzZkOWNjN2FiNGZlNDlhYzJiYWU1OCIsInN0YXR1cyI6dHJ1ZSwiaXNBZG1pbiI6ZmFsc2UsImVtYWlsIjoidGluYW9ndWtAZ21haWwuY29tIiwiaWF0IjoxNjE4ODE4NjUxLCJleHAiOjE2MTg4MjIyNTF9.QK1qLur7Svr-M79T-8-D4O0wPo9mh8DS521nMgHHwaY

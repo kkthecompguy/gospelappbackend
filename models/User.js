@@ -12,6 +12,13 @@ const UserSchema = new mongoose.Schema({
     ref: 'Package'
   },
   subscribed: { type: Boolean, default: false },
+  downloads: [{ 
+    mediaId: {type: String },
+    mediaType: { type: String },
+    mediaUrl: {type: String},
+    thumbnail: {type: String},
+    description: {type: String},
+  }],
   role: { type: String },
   isAdmin: { type: Boolean, default: false },
   password: { type: String },

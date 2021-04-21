@@ -8,7 +8,9 @@ const dotenv = require('dotenv');
 const crypto = require('crypto');
 const sendMail = require('../utils/sendMail');
 const jwt = require('jsonwebtoken');
+const fs = require('fs')
 const { isAuthenticated } = require('../middleware/auth');
+const { uploadAvatar } = require("../utils/fileUpload");
 
 dotenv.config()
 
@@ -42,7 +44,7 @@ router.post('/login',
         if (error) {
           throw error;
         } else {
-          return res.status(200).json({...payload, token: token, subscribed: user.subscribed});
+          return res.status(200).json({...payload, token: token, subscribed: user.subscribed, avatar:user.avatar});
         }
       });
     } else { 
@@ -90,10 +92,10 @@ router.post('/register',
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array(), status: 400 });
 
     const userWithEmail = await User.findOne({ email: req.body.email });
-    if (userWithEmail) return res.status(400).json({ message: "User with those account details already exist", status: 400 });
+    if (userWithEmail) return res.status(400).json({ message: "User with the email already exist", status: 400 });
 
     const userWithPhone = await User.findOne({ phoneNumber: req.body.phoneNumber });
-    if (userWithPhone)  return res.status(400).json({ message: "User with those account details already exist", status: 400 });
+    if (userWithPhone)  return res.status(400).json({ message: "User with the phone already exist", status: 400 });
 
     const newUser = User({
       firstName: req.body.firstName,
@@ -210,13 +212,49 @@ router.get('/all', async(req, res) => {
 // @access Private
 router.get('/profile', isAuthenticated, async (req, res) => {
   try {
-    console.log(req.user);
     const user = await User.findById(req.user.id).select('-password');
     if (!user) return res.status(404).json({ msg: 'User Not Found', status: 404 });
     return res.status(200).json(user);
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ error: error.message, status: 500});
+  }
+})
+
+// @route /api/v1/users/me/downloads
+// @desc get my downloads
+// @access Private
+router.get('/me/downloads', isAuthenticated, async (req, res) => {
+  try {
+
+    const user = await User.findById(req.user.id); 
+
+    return res.status(200).json(user.downloads);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message, status: 500 });
+  }
+})
+
+
+// @route /api/v1/users/avatar
+// @desc upload avatar
+// @access Private
+router.post('/avatar', isAuthenticated, async (req, res) => {
+  try {  
+    if (!req.files.localUri) return res.status(400).json({ message: "File is required", status: 400 });
+
+    console.log(req.files)
+
+    const user = await User.findById(req.user.id); 
+    const avatarUrl = await uploadAvatar(req.files.localUri.tempFilePath) 
+    user.avatar = avatarUrl;
+    await user.save(); 
+
+    return res.status(200).json({message: "Avatar uploaded"});
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message, status: 500 });
   }
 })
 

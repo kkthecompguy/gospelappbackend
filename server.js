@@ -1,6 +1,7 @@
 const express = require('express');
 const connectDB = require('./connection/connect');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 const users = require('./controllers/users.controller');
 const packages = require('./controllers/packages.controller');
 const videos = require('./controllers/videos.controller');
@@ -13,9 +14,15 @@ const  app = express();
 connectDB();
 
 // Init Middleware
+app.use(cors());
+app.use(express.json({ limit: '100mb' }));
+app.use(express.urlencoded({ extended: true, limit: '100mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(fileUpload({ useTempFiles: true }));
+app.use((req, res, next) => { 
+  next();
+})
 
 
 // routes

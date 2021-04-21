@@ -1,9 +1,10 @@
 const express = require('express');
-const { body } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const { nanoid } = require('nanoid');
 const router = express.Router();
 const { isAuthenticated } = require('../middleware/auth');
 const { Audio, Genre} = require('../models/Audio');
+const User = require('../models/User');
 const { uploadAudio, uploadThumbnail } = require('../utils/fileUpload')
 
 
@@ -14,24 +15,23 @@ router.post('/create',
  isAuthenticated, 
  body('genre',' Genre is required').isString(),
  body('description', 'Description is required').isString(),
- body('base64AudioUrl', 'File data is required').isString(),
+ body('audioUrl', 'Audio url is required').isString(),
  body('base64ImageUrl', 'Thumbnail Url is required').isString(),
  async (req, res) => {
   try {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array(), status: 400 });
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array(), status: 400 }); 
 
-    const audioId = nanoid(10);
-    const audioUrl = await uploadAudio(req.body.base64VideoUrl);
+    const audioId = nanoid(10); 
     const thumbnailUrl = await uploadThumbnail(req.body.base64ImageUrl);
 
     const audio = new Audio({
-      audioUrl: audioUrl,
+      audioUrl: req.body.audioUrl,
       audioId: audioId,
       thumbnail: thumbnailUrl,
       genre: req.body.genre,
       description: req.body.description
-    });
+    }); 
     
     await audio.save();
     return res.status(201).json({ message: 'Audio Uploaded Successfully', status: 201 });
@@ -145,4 +145,27 @@ router.get('/:audioId', isAuthenticated, async (req, res) =>  {
   }
 });
 
+
+// @route /api/v1/audios/download
+// @desc dowload to profile
+// @access Private
+router.post('/download', body('mediaType', 'Media Type is required').isString(), body('mediaId', 'Media Id is required').isString(), body('mediaUrl', 'Media url is required').isString(), body('thumbnail', 'Thumbnail is required').isString(), body('description', 'Description is required').isString(),  isAuthenticated, async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array(), status: 400 }); 
+
+    const user = await User.findById(req.user.id);
+
+    const audioExists = user.downloads.find(audio => audio.mediaId === req.body.mediaId)
+    if (audioExists) return res.status(400).json({ message: "Audio already downloaded", status: 400 });
+
+    user.downloads.push({mediaId: req.body.mediaId, mediaType: req.body.mediaType, mediaUrl: req.body.mediaUrl, thumbnail: req.body.thumbnail, description: req.body.description})
+    await user.save();
+
+    return res.status(200).json({ message: "Media added to your downloads" });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ error: error.message, status: 500 });
+  }
+})
 module.exports = router;

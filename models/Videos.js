@@ -14,6 +14,7 @@ const VideosSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
    }],
   trending: { type: Boolean, default: false },
+  download: { type: Boolean,  default:  false },
   genre: { type: String },
   popular: { type: Boolean, default: false },
   description: { type: String }
